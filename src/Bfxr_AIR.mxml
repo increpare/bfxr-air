@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009" 
+					   xmlns:s="library://ns.adobe.com/flex/spark" 
+					   xmlns:mx="library://ns.adobe.com/flex/mx"
+					   
+					   width="637" height="592"
+					   minHeight="592"
+					   minWidth="637"
+					   maxWidth="637"
+					   maxHeight="592"
+					    
+					   showStatusBar="false" 
+					   title="Bfxr" 
+					   backgroundColor="#CCBDA1" 
+					   xmlns:ns="com.increpare.bfxr_interface.components.*"
+					   closing="closeApplication(event)"
+					   creationComplete="onCreationComplete(event)">		
+	
+	<fx:Script>
+		
+		import air.update.ApplicationUpdaterUI;
+		import air.update.events.UpdateEvent;
+		
+		import mx.controls.Alert;
+		import mx.managers.PopUpManager;
+		
+		import spark.components.TitleWindow;
+		import mx.containers.Panel;
+			
+		//UPDATER CODE
+		private var appUpdater:ApplicationUpdaterUI = new ApplicationUpdaterUI();
+		
+		
+		private function loadFromFile(event:InvokeEvent):void {
+			
+			var args:Array = event.arguments as Array;
+			
+			if (args.length==0) 
+				return;
+				
+			var filepath:String = args[0];
+			
+			
+			_fileRef =  new File(filepath); 
+			
+			var extpart:String = filepath.substr(filepath.length-5);
+			
+			
+			if (extpart=="sound")
+			{
+				_fileRef.addEventListener(Event.COMPLETE, onLoadSettings); 
+			}
+			else if (extpart=="brary")
+			{
+				_fileRef.addEventListener(Event.COMPLETE, onLoadAllSettings); 			
+			}
+			else
+			{
+				trace("invalid file type provided " + filepath);
+				return;
+			}	
+			
+			_fileRef.load(); 
+		}
+		
+		
+		private function onCreationComplete(event:Event):void
+		{
+			//LOAD FROM FILE CODE
+			
+			nativeApplication.addEventListener(InvokeEvent.INVOKE,loadFromFile);			
+			
+			
+			//UPDATOR CODE
+			
+			// we set the URL for the update.xml file 
+			appUpdater.updateURL = "http://ded.bfxr.net/~locus/bfxr_update/update.xml"; 
+			//we set the event handlers for INITIALIZED nad ERROR 
+			appUpdater.addEventListener(UpdateEvent.INITIALIZED, onUpdate); 
+			appUpdater.addEventListener(ErrorEvent.ERROR, onError); 
+			//we can hide the dialog asking for permission for checking for a new update; 
+			//if you want to see it just leave the default value (or set true). 
+			appUpdater.isCheckForUpdateVisible = false; 
+			//if isFileUpdateVisible is set to true, File Update, File No Update, 
+			//and File Error dialog boxes will be displayed 
+			appUpdater.isFileUpdateVisible = false; 
+			//if isInstallUpdateVisible is set to true, the dialog box for installing the update is visible 
+			appUpdater.isInstallUpdateVisible = false; 
+			//we initialize the updater 
+			appUpdater.initialize(); 
+		}
+		
+		/** 
+		  * Handler function triggered by the ApplicationUpdater.initialize; 
+		  * The updater was initialized and it is ready to take commands 
+		  * (such as checkNow() ) 
+		  * @param UpdateEvent 
+		  */ 
+		private function onUpdate(event:UpdateEvent):void 
+		{ 
+			//start the process of checking for a new update and to install 
+			appUpdater.checkNow(); 
+		} 
+			
+		/** * Handler function for error events triggered by the ApplicationUpdater.initialize 
+		 * @param ErrorEvent 
+		 */ 
+		private function onError(event:ErrorEvent):void 
+		{ 
+			Alert.show(event.toString()); 
+		} 		
+		
+		private function onApplicationComplete(event:Event):void
+		{
+			//ExternalInterface.addCallback("hasModifiedData",main.hasModifiedData);
+		}
+		
+		/* Prompts user if things are in need of saving */
+		public function closeApplication(e:Event):void
+		{      
+			if (main.hasModifiedData()==false)
+				return;
+			
+			e.preventDefault();
+			
+			var myClickHandler:Function = function (evt_obj:Object):void {
+				if (evt_obj.detail == Alert.OK) {
+					exitAll();
+				}
+			};
+			
+			Alert.show(
+				"There are unapplied changes.  Are you sure you want to exit?", 
+				"Alert", 
+				Alert.OK | Alert.CANCEL, 
+				null, 
+				myClickHandler, 
+				null, 
+				Alert.OK);
+			
+		}
+		
+		public function exitAll():void
+		{
+			NativeApplication.nativeApplication.exit();			
+		}
+		
+		//returns url of swf...should change to http://www.bfxr.net/ for release builds
+		public function GetApplicationURL():String
+		{
+			return "http://www.bfxr.net/";
+			//return ExternalInterface.call('window.location.href.toString');
+		}
+		
+		public function GetPastedString():String
+		{			
+			var pasted:String = String(Clipboard.generalClipboard.getData(ClipboardFormats.TEXT_FORMAT));
+			return pasted;
+		}
+		
+		public function LookForSoundInURL():String
+		{
+			//in air, there's no url, so no parameter can be passed
+			return "";
+		}
+		
+		
+		/*
+		FILE RELATED ACTIVITIES
+		*/
+		
+		private var _fileRef:File; // File reference for loading in sfs file
+		
+		/**
+		 * Opens a browse window to load a sound setting file
+		 */
+		public function clickLoadSound():void
+		{
+			_fileRef = new File();
+			_fileRef.addEventListener(Event.SELECT, onSelectSettings);
+			try
+			{				
+				_fileRef.browse([ new FileFilter("SFX Sample Files (*.bfxrsound)", "*.bfxrsound")]);
+			}
+			catch (e:Error)
+			{
+				trace(e.message);
+			}
+		}
+		
+		/**
+		 * When the user selects a file, begins loading it
+		 * @param	e	Select event
+		 */
+		public function onSelectSettings(e:Event):void
+		{
+			_fileRef.cancel();
+			_fileRef.removeEventListener(Event.SELECT, onSelectSettings);
+			_fileRef.addEventListener(Event.COMPLETE, onLoadSettings);
+			_fileRef.load();
+		}
+		
+		public function DoSave(dat:*,filter:String):void
+		{			
+			new FileReference().save(dat, filter);
+		}
+		
+		public function DoLoadAll():void
+		{
+			_fileRef = new File();
+			_fileRef.addEventListener(Event.SELECT, onSelectLoadAllSettings);
+			try
+			{				
+				_fileRef.browse([ new FileFilter("BFXR Sample and Mixer Library (*.bfxrlibrary)", "*.bfxrlibrary")]);
+			}
+			catch (e:Error)
+			{
+				trace(e.message);
+			}
+		}
+		
+		public function onSelectLoadAllSettings(e:Event):void
+		{
+			_fileRef.cancel();
+			
+			_fileRef.removeEventListener(Event.SELECT, onSelectLoadAllSettings);
+			_fileRef.addEventListener(Event.COMPLETE, onLoadAllSettings);
+			_fileRef.load();
+		}
+		
+		
+		/**
+		 * Once loaded, passes the file to the synthesizer to parse
+		 * @param	e	Complete event
+		 */
+		public function onLoadAllSettings(e:Event):void
+		{
+			var i:int;
+			
+			_fileRef.removeEventListener(Event.COMPLETE, onLoadAllSettings);
+			var dat:String = _fileRef.data.toString();									
+			main.onLoadAllSettings(dat);
+			_fileRef = null;
+		}
+		
+		/**
+		 * Once loaded, passes the file to the synthesizer to parse
+		 * @param	e	Complete event
+		 */
+		public function onLoadSettings(e:Event):void
+		{
+			_fileRef.removeEventListener(Event.COMPLETE, onLoadSettings);
+			var dat:String = _fileRef.data.toString();
+			main.onLoadSettings(dat);
+			_fileRef = null;
+		}
+	</fx:Script>
+	
+	
+	<ns:Bfxr_interface  id="main" top="4" left="4"/>
+</s:WindowedApplication>
