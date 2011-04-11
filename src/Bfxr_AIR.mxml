@@ -5,9 +5,9 @@
 					   
 					   width="637" height="592"
 					   minHeight="592"
+					   maxHeight="705"
 					   minWidth="637"
 					   maxWidth="637"
-					   maxHeight="592"
 					    
 					   showStatusBar="false" 
 					   title="Bfxr" 
@@ -257,5 +257,5 @@
 	</fx:Script>
 	
 	
-	<ns:Bfxr_interface  id="main" top="4" left="4"/>
+	<ns:Bfxr_interface  id="main" top="4" left="4" bottom="4" right="4"/>
 </s:WindowedApplication>
