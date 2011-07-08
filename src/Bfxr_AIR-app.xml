@@ -120,7 +120,6 @@
 			<contentType>text/plain</contentType>
 			<icon>				
 				<image128x128>resources/fileicon.png</image128x128>
-				<image256x256>resources/fileicon_big.png</image256x256>
 			</icon>
 		</fileType>
 
@@ -131,7 +130,6 @@
 			<contentType>text/plain</contentType>
 			<icon>				
 				<image128x128>resources/fileicon2.png</image128x128>
-				<image256x256>resources/fileicon2_big.png</image256x256>
 			</icon>
 		</fileType>
 		
