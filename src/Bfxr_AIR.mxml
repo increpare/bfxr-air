@@ -21,11 +21,11 @@
 		import air.update.ApplicationUpdaterUI;
 		import air.update.events.UpdateEvent;
 		
+		import mx.containers.Panel;
 		import mx.controls.Alert;
 		import mx.managers.PopUpManager;
 		
 		import spark.components.TitleWindow;
-		import mx.containers.Panel;
 			
 		//UPDATER CODE
 		private var appUpdater:ApplicationUpdaterUI = new ApplicationUpdaterUI();
@@ -188,6 +188,18 @@
 			}
 		}
 		
+		public function SaveAllWaves(callback:Function):void
+		{
+			_fileRef = new File();
+			
+			var onSelectSaveAllWaveDirectory:Function = function(evt:Event):void {
+				callback(_fileRef.nativePath);
+			}
+				
+			_fileRef.addEventListener(Event.SELECT, onSelectSaveAllWaveDirectory);
+			_fileRef.browseForDirectory("Select output directory");
+		}
+		
 		/**
 		 * When the user selects a file, begins loading it
 		 * @param	e	Select event
@@ -205,6 +217,54 @@
 			new FileReference().save(dat, filter);
 		}
 		
+		
+		public function CanSaveAllWaves():Boolean
+		{
+			return true;
+		}
+		
+
+		public function DoSaveAllWaves(dir:String,wd:Array):void
+		{
+			//main.showLoading();
+			//trace("dir = " + dir);
+			var myDelay:Timer = new Timer(10);
+			
+			var i:int=0;
+			//trace("wd.length = " + wd.length);
+			var tick:Function = function():void {
+				if (i &lt; wd.length)
+				{
+					//main._progBar.indeterminate=false;	
+					//main._progBar.setProgress(i,wd.length);	
+					var filename:String = wd[i][0];
+					var filedat:ByteArray = wd[i][1];
+					
+					
+					var file:File = new File();
+					file = file.resolvePath(dir);
+					file = file.resolvePath("./"+filename+".wav");
+					//trace("path = "+file.toString());
+					var fs:FileStream = new FileStream();
+					fs.open(file,FileMode.WRITE);
+					fs.writeBytes(filedat);
+					fs.close();					
+				}
+				else					
+				{
+					//trace("done");
+					//main._progBar
+					//PopUpManager.removePopUp(main._progBar);					
+					myDelay.stop();					
+				}
+				i++;
+			}
+				
+			myDelay.addEventListener(TimerEvent.TIMER, tick);
+			myDelay.start();
+		}	
+		
+					
 		public function DoLoadAll():void
 		{
 			_fileRef = new File();
