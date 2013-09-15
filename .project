@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
 	<name>bfxr-air</name>
-	<comment/>
+	<comment></comment>
 	<projects>
 	</projects>
 	<buildSpec>
@@ -25,8 +25,7 @@
 		<link>
 			<name>[source path] src</name>
 			<type>2</type>
-			<locationURI>DOCUMENTS/Bfxr_Flash/src</locationURI>
+			<locationURI>DOCUMENTS/bfxr/src</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>
-
