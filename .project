@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <projectDescription>
-	<name>Bfxr_AIR</name>
-	<comment></comment>
+	<name>bfxr-air</name>
+	<comment/>
 	<projects>
 	</projects>
 	<buildSpec>
@@ -29,3 +29,4 @@
 		</link>
 	</linkedResources>
 </projectDescription>
+
