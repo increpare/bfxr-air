@@ -176,11 +176,63 @@
 			_fileRef.load();
 		}
 		
-		public function DoSave(dat:*,filter:String):void
+		public function DoSave(dat:String,filter:String,extension:String):void
 		{			
-			new FileReference().save(dat, filter);
+			//new FileReference().save(dat, filter);
+			mySave(dat,filter,extension);
 		}
 		
+		
+		//from http://analogd.com/blog/adobe-air/adobe-air-tips-serie-browseforsave-set-default-file-extension-and-validatemodify/
+		
+		import flash.filesystem.File;
+		import flash.filesystem.FileStream;
+		import flash.events.Event;
+		
+		private var docsDir:File;
+		private var MY_DEFAULT_EXTENSION:String = "bfxrsound";
+		private var VALID_EXTENSIONS_LIST:Array = ["bfxrsound"];
+		private var selectedextension:String;
+		private var dattowrite:String;
+		public function mySave(dat:String,filename:String,extension:String):void
+		{
+			dattowrite=dat;
+			MY_DEFAULT_EXTENSION=extension;
+			VALID_EXTENSIONS_LIST=[extension];
+			docsDir = File.documentsDirectory.resolvePath(filename);
+			docsDir.browseForSave("Save As");
+			docsDir.addEventListener(Event.SELECT, mySaveHandler);
+		}
+		private function mySaveHandler(event:Event):void
+		{
+			docsDir.removeEventListener(Event.SELECT, mySaveHandler);
+			//Split the returned File native path to retrieve file name
+			var tmpArr:Array = File(event.target).nativePath.split(File.separator);
+			var fileName:String = tmpArr.pop();//remove last array item and return its content
+			//Check if the extension given by user is valid, if not the default on is put.
+			//(for example if user put himself/herself an invalid file extension it is removed in favour of the default one)
+			var conformedFileDef:String = conformExtension(fileName);//comment: updated 17.11.2008 removed the typo
+			tmpArr.push(conformedFileDef);
+			//Create a new file object giving as input our new path with conformed file extension
+			var conformedFile:File = new File("file:///" + tmpArr.join(File.separator));
+			//Make save
+			var stream:FileStream = new FileStream();
+			stream.open(conformedFile, FileMode.WRITE);
+			stream.writeUTF(dattowrite);
+			stream.close();
+		}
+		
+		private function conformExtension(fileDef:String):String
+		{
+			var fileExtension:String = fileDef.split(".")[1];
+			for each(var it:String in VALID_EXTENSIONS_LIST){
+				if( fileExtension == it)
+					return fileDef;
+				
+			}
+			return fileDef.split(".")[0] + "." + MY_DEFAULT_EXTENSION;
+		}
+
 		
 		public function CanSaveAllWaves():Boolean
 		{
