@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <application xmlns="http://ns.adobe.com/air/application/3.1">
 
+
 <!-- 
 
 BUILD COMMANDS SOME MIX OF
@@ -13,6 +14,13 @@ BUILD COMMANDS SOME MIX OF
 
 
 ~/progs/airsdk/bin/adt -package  -keystore SigningCert.p12 -storepass PASS123 -storetype pkcs12 -tsa "http://sha256timestamp.ws.symantec.com/sha256/timestamp" -target native Bfxr.app Bfxr_AIR.airi
+
+
+THIS WORKS:
+
+increpare-macbook:bfxr-air stephenlavelle$ ~/progs/airsdk/bin/adt  -certificate -cn ADigitalID 1024-RSA SigningCert.p12 PASS123
+Warning: 1024-RSA key type is not supported. Switching to 2048-RSA.
+increpare-macbook:bfxr-air stephenlavelle$ ~/progs/airsdk/bin/adt -package  -keystore SigningCert.p12 -storepass PASS123 -storetype pkcs12 -tsa "http://sha256timestamp.ws.symantec.com/sha256/timestamp" -target bundle Bfxr.app Bfxr_AIR.airi
 
  -->
  
