@@ -1,7 +1,23 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
-<application xmlns="http://ns.adobe.com/air/application/2.0">
+<application xmlns="http://ns.adobe.com/air/application/3.1">
 
+<!-- 
+
+BUILD COMMANDS SOME MIX OF
+
+~/progs/airsdk/bin/adt  -certificate -cn SelfSign -ou QE -o "increpare" -c US 2048-RSA CERTIFICATE.p12 whatever#39 
+
+~/progs/airsdk/bin/adt  -certificate -cn ADigitalID 1024-RSA SigningCert.p12 PASS123
+
+~/progs/airsdk/bin/adt -package -storetype pkcs12 -keystore SigningCert.p12 -storepass PASS123  -tsa "http://sha256timestamp.ws.symantec.com/sha256/timestamp" -target bundle Bfxr.bundle Bfxr_AIR.airi
+
+
+~/progs/airsdk/bin/adt -package  -keystore SigningCert.p12 -storepass PASS123 -storetype pkcs12 -tsa "http://sha256timestamp.ws.symantec.com/sha256/timestamp" -target native Bfxr.app Bfxr_AIR.airi
+
+ -->
+ 
 <!-- Adobe AIR Application Descriptor File Template.
+
 
 	Specifies parameters for identifying, installing, and launching AIR applications.
 
@@ -25,7 +41,7 @@
 	<name>Bfxr</name>
 
 	<!-- An application version designator (such as "v1", "2.5", or "Alpha 1"). Required. -->
-	<version>1.3.2</version>
+	<versionNumber>1.5.1</versionNumber>
 
 	<!-- Description, displayed in the AIR application installer.
 	     May have multiple values for each language. See samples or xsd schema file. Optional. -->
@@ -40,7 +56,7 @@
 	<!-- Settings for the application's initial window. Required. -->
 	<initialWindow>
 		<!-- The main SWF or HTML file of the application. Required. -->
-		<!-- Note: In Flash Builder, the SWF reference is set automatically. -->
+	<!-- Note: In Flash Builder, the SWF reference is set automatically. -->
 		<content>[This value will be overwritten by Flash Builder in the output app.xml]</content>
 		
 		<!-- The title of the main window. Optional. -->

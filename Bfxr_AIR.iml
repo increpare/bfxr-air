@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="Flex" version="4">
+  <component name="FlexBuildConfigurationManager" active="Bfxr_AIR">
+    <configurations>
+      <configuration name="Bfxr_AIR" target-platform="Desktop" main-class="Bfxr_AIR" output-file="Bfxr_AIR.swf" output-folder="$MODULE_DIR$/bin-debug">
+        <dependencies>
+          <entries>
+            <entry library-id="5518a779-80c4-4f50-9473-cf496bd2babd">
+              <dependency linkage="Merged" />
+            </entry>
+          </entries>
+          <sdk name="4.6.0" />
+        </dependencies>
+        <compiler-options>
+          <map>
+            <entry key="compiler.locale" value="en_US" />
+          </map>
+        </compiler-options>
+        <packaging-air-desktop use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/src/Bfxr_AIR-app.xml" package-file-name="Bfxr_AIR">
+          <files-to-package>
+            <FilePathAndPathInPackage file-path="$MODULE_DIR$/src/resources" path-in-package="resources" />
+            <FilePathAndPathInPackage file-path="$MODULE_DIR$/src/newcert.p12" path-in-package="newcert.p12" />
+            <FilePathAndPathInPackage file-path="$MODULE_DIR$/src/Bfxr_AIR.css" path-in-package="Bfxr_AIR.css" />
+            <FilePathAndPathInPackage file-path="$MODULE_DIR$/src/SigningCert.p12" path-in-package="SigningCert.p12" />
+          </files-to-package>
+        </packaging-air-desktop>
+        <packaging-android />
+        <packaging-ios />
+      </configuration>
+    </configurations>
+    <compiler-options />
+  </component>
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$DOCUMENTS$/Bfxr_Flash/src">
+      <sourceFolder url="file://$DOCUMENTS$/Bfxr_Flash/src" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+    </content>
+    <orderEntry type="jdk" jdkName="4.6.0" jdkType="Flex SDK Type (new)" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library" exported="">
+      <library type="flex">
+        <properties id="5518a779-80c4-4f50-9473-cf496bd2babd" />
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/libs" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+        <jarDirectory url="file://$MODULE_DIR$/libs" recursive="false" />
+      </library>
+    </orderEntry>
+  </component>
+</module>

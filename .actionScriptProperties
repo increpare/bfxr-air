@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<actionScriptProperties analytics="false" mainApplicationPath="Bfxr_AIR.mxml" projectUUID="d3d81b0f-a784-4dc0-98b1-52f0996464a7" version="6">
-  <compiler additionalCompilerArguments="-locale en_US" autoRSLOrdering="true" copyDependentFiles="true" fteInMXComponents="false" generateAccessible="true" htmlExpressInstall="true" htmlGenerate="false" htmlHistoryManagement="false" htmlPlayerVersionCheck="true" includeNetmonSwc="false" outputFolderPath="bin-debug" sourceFolderPath="src" strict="true" targetPlayerVersion="0.0.0" useApolloConfig="true" useDebugRSLSwfs="true" verifyDigests="true" warn="true">
+<actionScriptProperties analytics="false" mainApplicationPath="Bfxr_AIR.mxml" projectUUID="d3d81b0f-a784-4dc0-98b1-52f0996464a7" version="11">
+  <compiler additionalCompilerArguments="-locale en_US" autoRSLOrdering="true" copyDependentFiles="true" fteInMXComponents="false" generateAccessible="true" htmlExpressInstall="true" htmlGenerate="false" htmlHistoryManagement="false" htmlPlayerVersionCheck="true" includeNetmonSwc="false" outputFolderPath="bin-debug" removeUnusedRSL="true" sourceFolderPath="src" strict="true" targetPlayerVersion="0.0.0" useApolloConfig="true" useDebugRSLSwfs="true" useFlashSDK="false" verifyDigests="true" warn="true">
     <compilerSourcePath>
       <compilerSourcePathEntry kind="1" linkType="1" path="${DOCUMENTS}/Bfxr_Flash/src"/>
     </compilerSourcePath>
@@ -20,5 +20,20 @@
     </application>
   </applications>
   <modules/>
+  <workers/>
   <buildCSSFiles/>
+  <flashCatalyst validateFlashCatalystCompatibility="false"/>
+  <buildTargets>
+    <buildTarget buildTargetName="default" platformId="default">
+      <airSettings airCertificatePath="/Users/stephenlavelle/Documents/bfxr-air/blah.p12" airTimestamp="true" anePathSet="true" version="1">
+        <airExcludes/>
+        <anePaths/>
+        <newLaunchParams/>
+        <modifiedLaunchParams/>
+        <newPackagingParams/>
+        <modifiedPackagingParams/>
+      </airSettings>
+      <actionScriptSettings version="1"/>
+    </buildTarget>
+  </buildTargets>
 </actionScriptProperties>
