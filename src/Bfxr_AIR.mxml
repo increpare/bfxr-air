@@ -200,7 +200,7 @@
 			_fileRef.load();
 		}
 		
-		public function DoSave(dat:*,filter:String):void
+		public function DoSave(dat:*,filter:String,extension:String):void
 		{			
 			new FileReference().save(dat, filter);
 		}
